@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- diretiva ng-app -->
+<html ng-app="filtersApp">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Tutorial AngularJS - episódio 6 - Filtros</title>
+	<script>
+	    document.write('<base href="' + document.location + '" />');
+	</script>
+
+	<script src="js/angular.min.js"></script>
+	<script src="js/app.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+	<title>Tutorial AngularJS - episódio 6 - Filtros</title>
+</head> 
+
+<!-- define um controller para este trecho da tela -->
+<!-- diretiva ng-controller -->
+
+<body ng-controller="controller">
+
+  <div class="container theme-showcase">
+    <h1>Estados e capitais</h1>
+    
+    <p>Data: {{data | date:'dd/MM/yyyy'}}</p>
+    
+    <p>Filtrar: <input type="text" ng-model="filtro" /></p>
+
+    <ul class="list-group">
+      <!-- diretiva ng-repeat -->
+      <li class="list-group-item" ng-repeat="state in states | orderBy:'name' | filter:filtro">
+      {{state.name | uppercase}} - {{state.capital | lowercase}} - renda per capita: {{state.renda | currency:'R$'}}
+      </li>
+    </ul>
+
+    <p>
+      <!-- diretiva ng-submit -->
+      <form ng-submit="addState()">
+        <!-- diretiva ng-model -->
+        <input type="text" ng-model="estado" placeholder="Digite um estado" />
+        <input type="text" ng-model="capital" placeholder="Digite a capital" />
+        <input type="submit" value="Incluir" />
+      </form>
+    </p>
+
+    <!-- limitTo -->
+    <p>Letras: {{letras}}</p>
+    <p>Letras (limitado a 2): {{letras | limitTo : 2}}</p>
+    <p>Letras (limitado a 2 e uppercase): {{letras | limitTo : 2 | uppercase }}</p>
+
+    <!-- filtro json -->
+    <p>Estados (json): {{states | json}} </p>
+    <!-- <p>Letras (json): {{states[0].renda| json }}</p> = 2000 -->
+
+  </div>
+</body>
+	<!-- Filtro é um mecanismo que permite transformar os dados que são exibidos para o usuário -->
+
+	<!-- PRINCIPAIS FILTROS/SINTAXE DE FILTROS
+		* currency : Transforma um numero em formato monetario
+		* date : Formata uma uma data (usando mascara ou não) 
+		* orderBy : Ordena um array de acordo com o predicado
+		* filter : Filtra dados de um array. Util quando temos uma lista muito grande
+		* json : Exibe um json da expressão (Usado para debug)
+		* lowercase : Passa todas as letras para caixa baixa
+		* uppercase : Passa todas as letras para caixa alta
+		* limitTo : Limita os elementos de um array
+
+		{{expressão | filtro : parametro1 : ...parametroN}}
+	-->
+</html>
